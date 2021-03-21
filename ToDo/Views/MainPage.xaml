@@ -1,14 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:p="http://prismlibrary.com"
              x:Class="ToDo.View.MainPage"
+             x:Name="ToDoView"
              Title="Notes">
 
     <StackLayout Padding="20">
         <StackLayout Orientation="Vertical">
             <Label Text="Nota" />
             <Entry HorizontalOptions="FillAndExpand" Text="{Binding Note}" Placeholder="Ingresa nota agregar" />
-            <Button Command="{Binding Add}"  Text="Agregar" />
+            <Button Command="{Binding AddCommand}"  Text="Agregar" />
         </StackLayout>
         <ListView
             ItemsSource="{Binding Tasks}">
@@ -16,7 +18,17 @@
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding Note}" />
+                            <Label VerticalOptions="Center" Text="{Binding Note}" HorizontalOptions="StartAndExpand" />
+                            <Label VerticalOptions="Center" Text="Done" />
+                            <CheckBox IsChecked="{Binding Done, Mode=TwoWay}"  Color="CornflowerBlue" >
+                                <CheckBox.Behaviors>
+                                    <p:EventToCommandBehavior
+                                        Command="{Binding BindingContext.CheckCommand, Source={x:Reference ToDoView}}"
+                                        CommandParameter="{Binding .}"
+                                        EventName="CheckedChanged" />
+                                </CheckBox.Behaviors>
+                            </CheckBox>
+                            <Button Text="X" Command="{Binding Source={x:Reference ToDoView}, Path=BindingContext.ItemCommand}" CommandParameter="{Binding .}" />
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

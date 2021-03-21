@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
+using Prism.Commands;
 using Prism.Mvvm;
 using ToDo.Model;
 using Xamarin.Forms;
@@ -11,12 +13,26 @@ namespace ToDo.ViewModels
 
         public ToDoViewModel()
         {
-            addCommand = new Command(agregarevent);
+            AddCommand = new DelegateCommand(AddNote);
+            ItemCommand = new DelegateCommand<TodoItem>(DeleteNote);
+            CheckCommand = new DelegateCommand<TodoItem>(DoneNote);
         }
 
-        private void agregarevent()
+        private void AddNote()
         {
             dataItem.Add(note);
+        }
+
+        private void DeleteNote(TodoItem todoItem)
+        {
+            dataItem.Remove(todoItem);
+        }
+
+        private void DoneNote(TodoItem todoItem)
+        {
+            if (todoItem != null) {
+                dataItem.Update(todoItem);
+            }
         }
 
         private string note;
@@ -32,12 +48,22 @@ namespace ToDo.ViewModels
             get { return dataItem.TodoItems; }
         }
 
-        private Command addCommand;
-
-        public Command Add
+        public ICommand AddCommand
         {
-            get { return addCommand; }
-            set { addCommand = value; }
+            get;
+            private set;
+        }
+
+        public ICommand ItemCommand
+        {
+            get;
+            private set;
+        }
+
+        public ICommand CheckCommand
+        {
+            get;
+            private set;
         }
     }
 }

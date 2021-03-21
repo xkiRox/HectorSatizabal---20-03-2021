@@ -27,6 +27,17 @@ namespace ToDo.Model
             todoItems.Clear();
         }
 
+        public void Remove(TodoItem item)
+        {
+            todoItems.Remove(item);
+            App.Database.DeleteItemAsync(item);
+        }
+
+        public void Update(TodoItem item)
+        {
+            App.Database.SaveItemAsync(item);
+        }
+
         public ObservableCollection<TodoItem> TodoItems
         {
             get {
