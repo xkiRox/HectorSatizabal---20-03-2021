@@ -7,7 +7,7 @@ namespace ToDo.ViewModels
 {
     public class ToDoViewModel : BindableBase
     {
-        DataStore dataStore = new DataStore();
+        DataItem dataItem = new DataItem();
 
         public ToDoViewModel()
         {
@@ -16,7 +16,7 @@ namespace ToDo.ViewModels
 
         private void agregarevent()
         {
-            dataStore.Add(note);
+            dataItem.Add(note);
         }
 
         private string note;
@@ -27,9 +27,9 @@ namespace ToDo.ViewModels
             set { note = value; }
         }
 
-        public ObservableCollection<Task> Tasks
+        public ObservableCollection<TodoItem> Tasks
         {
-            get { return dataStore.Tasks; }
+            get { return dataItem.TodoItems; }
         }
 
         private Command addCommand;

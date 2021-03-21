@@ -11,12 +11,12 @@
             <Button Command="{Binding Add}"  Text="Agregar" />
         </StackLayout>
         <ListView
-            ItemsSource="{Binding Tasks }">
+            ItemsSource="{Binding Tasks}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding Note}" />
+                            <Label Text="{Binding Note}" />
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>
